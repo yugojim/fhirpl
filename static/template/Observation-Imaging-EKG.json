@@ -1,0 +1,37 @@
+{
+    "resourceType": "Observation",
+    "category": [
+        {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "imaging",
+                    "display": "Imaging"
+                }
+            ]
+        }
+    ],
+    "code": {
+        "coding": [
+		  {
+			"system" : "http://mitwfhir.dicom.org.tw/fhir/CodeSystem/ICD-10-procedurecode",
+			"code" : "",
+			"display" : ""
+		  }
+		]
+    },
+    "effectiveDateTime": "",
+    "component": [
+        {
+            "code": {
+                "coding": [
+                    {
+                        "system": "https://build.fhir.org/ig/HL7/UTG/CodeSystem-v2-0299.html",
+                        "code": "Base64"
+                    }
+                ]
+            },
+            "valueString": ""
+        }
+    ]
+}
