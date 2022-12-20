@@ -196,7 +196,8 @@ def linebot(request):
 
         return HttpResponse()
     else:
-        return HttpResponseBadRequest()
+        return HttpResponse()
+        #return HttpResponseBadRequest()
  
 def index(request):
     user = request.user
