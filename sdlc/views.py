@@ -30,7 +30,8 @@ LINE_CHANNEL_SECRET ='67ac55fc89aa2de4a9ec4f27c022f84a'
 LINE_CHANNEL_ACCESS_TOKEN ='xRk4XcXIQ7ZGxcqmQqioq/+/zU8DlJVleH4PZXu2AfPBF4Y22J4wMjgxKgUvCAPWhWhpCHRsgNsgJ3eUcTF8dKiK0fVR2DAZSIZaxAShBtzRvFmXloY++mVGlVKj5jN1Z0NdH/pzYsb06svwvo0SxAdB04t89/1O/w1cDnyilFU='
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(LINE_CHANNEL_SECRET)
-NGROK='https://0c0c-1-200-49-111.jp.ngrok.io'
+NGROK='https://stemi.chimei.org.tw/linebot'
+fhir='http://stemi.chimei.org.tw:8080/fhir/'
 jsonPath=str(pathlib.Path().absolute()) + "/static/template/Observation-Imaging-EKG.json"
 ObservationImagingEKGJson = json.load(open(jsonPath,encoding="utf-8"))
 
@@ -84,7 +85,7 @@ def linebot(request):
                     ObservationImagingEKGJson['component'][0]['valueString'] = encoded_string.decode("utf-8")
                     ObservationImagingEKGJson['effectiveDateTime'] = current_time
                     payload = json.dumps(ObservationImagingEKGJson)
-                    url = "http://104.208.68.39:8080/fhir/Observation"
+                    url = fhir + "Observation"
                     headers = {'Content-Type': 'application/json'}
                     response = requests.request('POST', url, headers=headers, data=payload, verify=False)
                     resultjson=json.loads(response.text)
@@ -148,12 +149,12 @@ def linebot(request):
                             ObservationImagingEKGJson['component'][0]['valueString'] = encoded_string.decode("utf-8")
                             ObservationImagingEKGJson['effectiveDateTime'] = current_time
                             payload = json.dumps(ObservationImagingEKGJson)
-                            url = "http://104.208.68.39:8080/fhir/Observation"
+                            url = fhir + "Observation"
                             headers = {'Content-Type': 'application/json'}
                             response = requests.request('POST', url, headers=headers, data=payload, verify=False)
                             resultjson=json.loads(response.text)
-                            with open( pdffile + '.jpgBase64' ,'w+') as f:
-                                f.write(encoded_string.decode("utf-8"))
+                            #with open( pdffile + '.jpgBase64' ,'w+') as f:
+                                #f.write(encoded_string.decode("utf-8"))
                     if isinstance(event, MessageEvent):
                         if (ImageByte==''):
                             line_bot_api.reply_message(event.reply_token,\

@@ -7,7 +7,8 @@ import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
 #fhir = "http://137.116.141.127:8070/fhir/"
-fhir = "http://104.208.68.39:8080/fhir/"
+#fhir = "http://104.208.68.39:8080/fhir/"
+fhir='http://stemi.chimei.org.tw:8080/fhir/'
 #fhir = "https://104.208.68.39:9443/fhir-server/api/v4/"
 headers = {    
     'Content-Type': 'application/json',
