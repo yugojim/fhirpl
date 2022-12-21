@@ -26,11 +26,16 @@ risk = DocumentPath + 'risk.csv'
 riskdf = pd.read_csv(risk, encoding='utf8')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LINE_CHANNEL_SECRET ='67ac55fc89aa2de4a9ec4f27c022f84a' 
-LINE_CHANNEL_ACCESS_TOKEN ='xRk4XcXIQ7ZGxcqmQqioq/+/zU8DlJVleH4PZXu2AfPBF4Y22J4wMjgxKgUvCAPWhWhpCHRsgNsgJ3eUcTF8dKiK0fVR2DAZSIZaxAShBtzRvFmXloY++mVGlVKj5jN1Z0NdH/pzYsb06svwvo0SxAdB04t89/1O/w1cDnyilFU='
+#LINE_CHANNEL_SECRET ='67ac55fc89aa2de4a9ec4f27c022f84a'
+LINE_CHANNEL_SECRET ='7829750de3e8f4acde69750e8fef58bc' 
+#LINE_CHANNEL_ACCESS_TOKEN ='xRk4XcXIQ7ZGxcqmQqioq/+/zU8DlJVleH4PZXu2AfPBF4Y22J4wMjgxKgUvCAPWhWhpCHRsgNsgJ3eUcTF8dKiK0fVR2DAZSIZaxAShBtzRvFmXloY++mVGlVKj5jN1Z0NdH/pzYsb06svwvo0SxAdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_ACCESS_TOKEN ='jqllMrk8LltFwRLsG+01efujKZBcQ8wFcy7CsgY6/D70UFnj3FSF+gUIbysFfXsKYMn9oTDqPkUaTAIXeDNYanQXfub8JztcPLXr6OWTowk8C1q+8nLf8NLOMPNWVgOIAPU3O4qWvcuxMtGNlPQk6gdB04t89/1O/w1cDnyilFU='
+
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(LINE_CHANNEL_SECRET)
-NGROK='https://stemi.chimei.org.tw/linebot'
+NGROK='https://stemi.chimei.org.tw'
+#NGROK='https://1cf0-180-217-250-217.jp.ngrok.io'
+
 fhir='http://stemi.chimei.org.tw:8080/fhir/'
 jsonPath=str(pathlib.Path().absolute()) + "/static/template/Observation-Imaging-EKG.json"
 ObservationImagingEKGJson = json.load(open(jsonPath,encoding="utf-8"))
@@ -69,9 +74,9 @@ def linebot(request):
                         #Sprint(profile.status_message)
                     except :
                         None
-                    repleM=TextSendMessage(profile.user_id + ' ' + event.message.text + ' ' + current_time)
-                    if isinstance(event, MessageEvent):
-                        line_bot_api.reply_message(event.reply_token, repleM)
+                    #repleM=TextSendMessage(profile.user_id + ' ' + event.message.text + ' ' + current_time)
+                    #if isinstance(event, MessageEvent):
+                        #line_bot_api.reply_message(event.reply_token, repleM)
                         
                 elif (event.message.type == 'image'):#image,video,audio,file,location 
                     #print(event.message.id)
@@ -96,7 +101,7 @@ def linebot(request):
                     #print(2)
                     if isinstance(event, MessageEvent):
                         line_bot_api.reply_message(event.reply_token,ImageSendMessage(imageOoriginalContentUrl,imagePreviewImageUrl))
-                    time.sleep(5)
+                    #time.sleep(5)
                     if isinstance(event, MessageEvent):
                         line_bot_api.push_message(group_id, TextSendMessage(url + '/' + str(resultjson['id'])))
                         line_bot_api.push_message(group_id, TextSendMessage('ICD-10 : '+ObservationImagingEKGJson['code']['coding'][0]['code']\
@@ -110,10 +115,10 @@ def linebot(request):
                             fd.write(chunk)
                     videoOriginalContentUrlUrl = NGROK + '/static/linebot/sample.mp4'
                     videoReviewImageUrl = NGROK + '/static/linebot/sample.png'
-                    if isinstance(event, MessageEvent):
-                        line_bot_api.reply_message(event.reply_token,\
-                                                   VideoSendMessage(videoOriginalContentUrlUrl,\
-                                                                    videoReviewImageUrl))
+                    #if isinstance(event, MessageEvent):
+                        #line_bot_api.reply_message(event.reply_token,\
+                                                   #VideoSendMessage(videoOriginalContentUrlUrl,\
+                                                                    #videoReviewImageUrl))
                     
                 elif (event.message.type == 'audio'):#image,video,audio,file,location 
                     #print(event.message)
@@ -123,10 +128,10 @@ def linebot(request):
                         for chunk in message_content.iter_content():
                             fd.write(chunk)
                     audioOriginal_content_url = NGROK + '/static/linebot/sample.m4a'
-                    if isinstance(event, MessageEvent):
-                        line_bot_api.reply_message(event.reply_token,\
-                                                   AudioSendMessage(audioOriginal_content_url,\
-                                                                  audioDuration))
+                    #if isinstance(event, MessageEvent):
+                        #line_bot_api.reply_message(event.reply_token,\
+                                                   #AudioSendMessage(audioOriginal_content_url,\
+                                                                  #audioDuration))
                     
                 elif (event.message.type == 'file'):#image,video,audio,file,location
                     #print(event.message.file_size)
@@ -165,7 +170,7 @@ def linebot(request):
                             line_bot_api.reply_message(event.reply_token,\
                                                        ImageSendMessage(imageOoriginalContentUrl,\
                                                                         imagePreviewImageUrl))
-                            time.sleep(5)
+                            #time.sleep(5)
                             if isinstance(event, MessageEvent):
                                 line_bot_api.push_message(group_id, TextSendMessage(url + '/' + str(resultjson['id'])))
                                 line_bot_api.push_message(group_id, TextSendMessage('ICD-10 : '+ObservationImagingEKGJson['code']['coding'][0]['code']\
@@ -178,26 +183,26 @@ def linebot(request):
                     address=event.message.address
                     latitude=event.message.latitude
                     longitude=event.message.longitude
-                    if isinstance(event, MessageEvent):
-                        line_bot_api.reply_message(event.reply_token,\
-                                                   LocationSendMessage(title,address,latitude,longitude))                
+                    #if isinstance(event, MessageEvent):
+                        #line_bot_api.reply_message(event.reply_token,\
+                                                   #LocationSendMessage(title,address,latitude,longitude))                
                     
                 elif (event.message.type == 'sticker'):#image,video,audio,file,location
                     #print(event.message)                
                     import random
                     package_id = 1
                     sticker_id = random.randint(1,17)
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        StickerSendMessage(package_id=package_id, sticker_id=sticker_id))
+                    #line_bot_api.reply_message(
+                        #event.reply_token,
+                        #StickerSendMessage(package_id=package_id, sticker_id=sticker_id))
                 else:
                     if isinstance(event, MessageEvent):
                         line_bot_api.reply_message(event.reply_token, TextSendMessage('unknow type'))     
 
         return HttpResponse()
     else:
-        return HttpResponse()
-        #return HttpResponseBadRequest()
+        #return HttpResponse()
+        return HttpResponseBadRequest()
  
 def index(request):
     user = request.user
