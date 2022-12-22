@@ -24,21 +24,20 @@ from . import models
 DocumentPath = str(pathlib.Path().absolute()) + "/static/doc/"
 risk = DocumentPath + 'risk.csv'
 riskdf = pd.read_csv(risk, encoding='utf8')
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LINE_CHANNEL_SECRET ='67ac55fc89aa2de4a9ec4f27c022f84a'
-#LINE_CHANNEL_SECRET ='7829750de3e8f4acde69750e8fef58bc' 
 
-LINE_CHANNEL_ACCESS_TOKEN ='xRk4XcXIQ7ZGxcqmQqioq/+/zU8DlJVleH4PZXu2AfPBF4Y22J4wMjgxKgUvCAPWhWhpCHRsgNsgJ3eUcTF8dKiK0fVR2DAZSIZaxAShBtzRvFmXloY++mVGlVKj5jN1Z0NdH/pzYsb06svwvo0SxAdB04t89/1O/w1cDnyilFU='
-#LINE_CHANNEL_ACCESS_TOKEN ='jqllMrk8LltFwRLsG+01efujKZBcQ8wFcy7CsgY6/D70UFnj3FSF+gUIbysFfXsKYMn9oTDqPkUaTAIXeDNYanQXfub8JztcPLXr6OWTowk8C1q+8nLf8NLOMPNWVgOIAPU3O4qWvcuxMtGNlPQk6gdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET ='7829750de3e8f4acde69750e8fef58bc' 
+LINE_CHANNEL_ACCESS_TOKEN ='jqllMrk8LltFwRLsG+01efujKZBcQ8wFcy7CsgY6/D70UFnj3FSF+gUIbysFfXsKYMn9oTDqPkUaTAIXeDNYanQXfub8JztcPLXr6OWTowk8C1q+8nLf8NLOMPNWVgOIAPU3O4qWvcuxMtGNlPQk6gdB04t89/1O/w1cDnyilFU='
+NGROK='https://stemi.chimei.org.tw'
+fhir='http://stemi.chimei.org.tw:8080/fhir/'
+
+#LINE_CHANNEL_SECRET ='67ac55fc89aa2de4a9ec4f27c022f84a'
+#LINE_CHANNEL_ACCESS_TOKEN ='xRk4XcXIQ7ZGxcqmQqioq/+/zU8DlJVleH4PZXu2AfPBF4Y22J4wMjgxKgUvCAPWhWhpCHRsgNsgJ3eUcTF8dKiK0fVR2DAZSIZaxAShBtzRvFmXloY++mVGlVKj5jN1Z0NdH/pzYsb06svwvo0SxAdB04t89/1O/w1cDnyilFU='
+#NGROK='https://1339-104-208-68-39.ap.ngrok.io'
+#fhir = "http://104.208.68.39:8080/fhir/"
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(LINE_CHANNEL_SECRET)
-#NGROK='https://stemi.chimei.org.tw'
-NGROK='https://1339-104-208-68-39.ap.ngrok.io'
-
-fhir = "http://104.208.68.39:8080/fhir/"
-#fhir='http://stemi.chimei.org.tw:8080/fhir/'
 
 jsonPath=str(pathlib.Path().absolute()) + "/static/template/Observation-Imaging-EKG.json"
 ObservationImagingEKGJson = json.load(open(jsonPath,encoding="utf-8"))
